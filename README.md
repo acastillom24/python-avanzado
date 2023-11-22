@@ -496,7 +496,175 @@ a[a.notnull()]
 ```
 
 ## DataFrame pt1
+```py
+import pandas as pd
+
+usuarios = {
+    'username': ['user1', 'user2', 'user3'],
+    'email': ['user1@example.com', 'user2@example.com', 'user3@example.com'],
+    'age': [27, 10, 30],
+    'status': [True, True, False]
+}
+
+pd.DataFrame(usuarios)
+
+# Cambiar el indice en un dataframe
+pd.DataFrame(usuarios, index = ['a', 'b', 'c'])
+```
 
 ## DataFrame pt2
+```py
+import pandas as pd
+
+usuarios = {
+    'username': ['user1', 'user2', 'user3'],
+    'email': ['user1@example.com', 'user2@example.com', 'user3@example.com'],
+    'age': [27, 10, 30],
+    'status': [True, True, False]
+}
+
+data = pd.DataFrame(usuarios)
+
+# Seleccionar columnas y filas
+data['username']
+data['username']['a']
+data.username
+
+# Listar todas las columnas de un dataframe
+data.columns
+
+# Listar los valores de un dataframe
+data.values
+```
 
 ## Columnas del DataFrame
+```py
+import pandas as pd
+import numpy as np
+
+users = {
+    'username': ['user1', 'user2', 'user3'],
+    'email': ['user1@example.com', 'user2@example.com', 'user3@example.com'],
+    'age': [27, 10, 30],
+    'status': [True, True, False]
+}
+
+data = pd.DataFrame(users)
+
+# Nueva columna al dataframe
+calificaciones = pd.Series(
+    np.random.randint(5, 10, 3), 
+    index=['a', 'b', 'c']
+)
+
+data['calificaciones'] = calificaciones
+
+# Renombrar las columnas
+data = data.rename(
+    columns={'calificaciones':'score'}
+)
+
+# Eliminar columnas de un dataframe
+del data['score']
+```
+
+## Leer un archivo `csv`
+```py
+import pandas as pd
+
+data = pd.read_csv("user.csv")
+data = pd.read_csv("user.csv", index_col='id')
+
+# Obtener los primeros y ultimos registros
+data.head(10)
+data.tail(10)
+```
+
+## Limpieza de datos
+```py
+import pandas as pd
+
+data = pd.read_csv("user.csv", index_col='id')
+
+# Eliminar filas que carezcan de valor
+data.dropna()
+
+# Rellenar los valor de na
+data.fillna('NewValue')
+data.fillna(
+    {
+        'name': 'Sin nombre', 
+        'email': 'example@example.com'
+    }
+)
+```
+
+## Atributo loc
+```py
+import pandas as pd
+
+users = {
+    'username': ['user1', 'user2', 'user3'],
+    'email': ['user1@example.com', 'user2@example.com', 'user3@example.com'],
+    'age': [27, 10, 30],
+    'status': [True, True, False]
+}
+
+data = pd.DataFrame(users, index=['a', 'b', 'c'])
+
+# seleccionar indices del tipo string
+data.loc['a']
+data.loc['c']
+
+# Subdataframes
+data.loc['a':'b']
+data.loc['a':'b', ['username', 'email']]
+data.loc['a':'b'][['username', 'email']]
+```
+
+## Atributo iloc
+```py
+import pandas as pd
+
+users = {
+    'username': ['user1', 'user2', 'user3'],
+    'email': ['user1@example.com', 'user2@example.com', 'user3@example.com'],
+    'age': [27, 10, 30],
+    'status': [True, True, False]
+}
+
+data = pd.DataFrame(users)
+
+# seleccionar indices del tipo int
+data.iloc[0]
+data.iloc[3]
+
+# Subdataframes
+data.iloc[:1]
+data.iloc[:1, [0, 2, 3]]
+data.iloc[:1][['username', 'email', 'status']]
+```
+
+## Condicionales
+```py
+import pandas as pd
+
+users = {
+    'username': ['user1', 'user2', 'user3'],
+    'email': ['user1@example.com', 'user2@example.com', 'user3@example.com'],
+    'age': [27, 10, 30],
+    'status': [True, True, False]
+}
+
+data = pd.DataFrame(users)
+
+# Obtener el nombre de todos los usuarios del país de Canadá.
+
+# Obtener el nombre y correo electrónico de todos los usuarios con edad mayor a 50.
+
+# Obtener el promedio de todos los usuarios de sexo femenino con edad mayor a 30.
+
+
+```
+
+## Ordenamiento
