@@ -660,11 +660,78 @@ data = pd.DataFrame(users)
 
 # Obtener el nombre de todos los usuarios del país de Canadá.
 
+subdata = data[data['country'] == 'Canada']['name']
+
 # Obtener el nombre y correo electrónico de todos los usuarios con edad mayor a 50.
+subdata = data[data['age'] > 50][['name', 'email']]
 
 # Obtener el promedio de todos los usuarios de sexo femenino con edad mayor a 30.
-
-
+subdata = data[(data['sex'] == 'female') & (data['age'] > 30)]['age'].mean()
 ```
 
 ## Ordenamiento
+```py
+import pandas as pd
+
+users = {
+    'username': ['user1', 'user2', 'user3'],
+    'email': ['user1@example.com', 'user2@example.com', 'user3@example.com'],
+    'age': [27, 10, 30],
+    'status': [True, True, False]
+}
+
+data = pd.DataFrame(users)
+
+# Obtener el usuario más joven del país Canadá.
+data[data['country'] == 'Canada'].sort_values('age').head(1)
+
+# Obtener a los 5 usuarios más viejos de Alemania.
+data[data['country'] == 'Germany'].sort_values('age', ascending=False).head(5)
+data[data['country'] == 'Germany'].sort_values('age').tail(5)
+```
+
+## Búsqueda por rangos
+```py
+# Obtener todos los usuarios entre las edades 40 y 50
+data[(data['age'] >= 40) & (data['age'] <= 50)]
+data[data['age'].between(40, 50)]
+```
+
+## Búsqueda entre opciones
+```py
+# Obtener el nombre de todos los usuarios mayores a 30 años de los paises Canada, Alemania y Francia.
+countries = ['Canada', 'Germany', 'France']
+data[(data['age'] >30) & (data['country'].isin(countries))]
+```
+
+## Métodos de strings
+```py
+import pandas as pd
+
+# starswith - endswith - contains
+
+data[ data['email'].str.startswith('a')]
+data[ data['email'].str.endswith('.com')]
+data[ data['name'].str.contains('Gabriel')]
+```
+
+## Agrupamiento
+```py
+import pandas as pd
+
+# Mostrar en consola la cantidad de hombres y mujeres del dataset.
+
+data.groupby('gender')['gender'].count()
+
+# Mostrar el país con más mujeres
+data[data['gender'] == 'female'].groupby('country')['country'].count().sort_values(ascending=False).head(1)
+```
+
+# Curso de base de datos con Python
+
+## Módulo 1
+
+### Crear conexión MySQL
+```py
+
+```
